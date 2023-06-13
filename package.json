@@ -2,14 +2,20 @@
   "name": "jest-test",
   "version": "1.0.0",
   "description": "",
-  "main": "math.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^29.5.0"
+    "@parcel/transformer-sass": "^2.9.2",
+    "jest": "^29.5.0",
+    "parcel": "^2.9.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }
