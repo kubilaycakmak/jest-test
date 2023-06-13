@@ -10,7 +10,7 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [12.x, 14.x, 16.x]
+                node-version: [16.x]
 
         steps:
             - uses: actions/checkout@v2
@@ -25,3 +25,25 @@ jobs:
 
             - name: Run tests
               run: npm test
+    build:
+        # wait for jest to finish
+        needs: tests
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Build to Netlify
+              uses: nwtgck/actions-netlify@v2.0
+              with:
+                  publish-dir: ./dist
+                  production-branch: main
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  deploy-message: "Deploy from GitHub Actions"
+                  enable-pull-request-comment: true
+                  enable-commit-comment: true
+                  overwrites-pull-request-comment: true
+              env:
+                  NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+                  NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+              timeout-minutes: 1
